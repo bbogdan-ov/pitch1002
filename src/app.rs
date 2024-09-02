@@ -11,7 +11,6 @@ use winit::{
     event::{ ElementState, KeyEvent, StartCause, WindowEvent },
     event_loop::{ ActiveEventLoop, ControlFlow },
     keyboard::{ KeyCode, PhysicalKey },
-    platform::wayland::WindowAttributesExtWayland,
     window::{ Window, WindowId },
 };
 
@@ -199,7 +198,11 @@ impl<'win> ApplicationHandler for App<'win> {
             .with_resizable(false);
 
         #[cfg(target_os = "linux")]
-        let attrs = attrs.with_name("pitch1002", "pitch1002");
+        let attrs = {
+            use winit::platform::wayland::WindowAttributesExtWayland;
+
+            attrs.with_name("pitch1002", "pitch1002")
+        };
 
         let win = Arc::new(event_loop.create_window(attrs).unwrap());
         let mut context = Context::new(Arc::clone(&win));
