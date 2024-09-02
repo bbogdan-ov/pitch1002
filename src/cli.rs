@@ -62,11 +62,11 @@ pub fn print_help() {
     println!("    └───┴───┴───┴───┘      └───┴───┴───┴───┘");
     println!();
     println!("    ┌─────┐");
-    println!("    │ ESC │   - Pause/unpause the game");
+    println!("    │ ESC │       - Pause/unpause the game");
     println!("    ├───┬─┘");
-    println!("    │ M │     - Mute/unmute");
+    println!("    │ M │         - Mute/unmute");
     println!("    ├───┼───┐");
-    println!("    │ [ │ ] │ - Previous/next palette");
+    println!("    │ [ │ ] │     - Previous/next palette");
     println!("    ├───┼───┼───┐");
     println!("    │ 0 │ - │ + │ - Reset/-/+ speed");
     println!("    ├───┴───┴───┤");
