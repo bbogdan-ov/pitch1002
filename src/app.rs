@@ -193,11 +193,13 @@ impl<'win> ApplicationHandler for App<'win> {
         let size = LogicalSize::new(DISPLAY_WIDTH * DISPLAY_SCALE, DISPLAY_HEIGHT * DISPLAY_SCALE);
         let attrs = Window::default_attributes()
             .with_title("PITCH1002")
-            .with_name("pitch1002", "pitch1002")
             .with_inner_size(size)
             .with_min_inner_size(size)
             .with_max_inner_size(size)
             .with_resizable(false);
+
+        #[cfg(target_os = "linux")]
+        let attrs = attrs.with_name("pitch1002", "pitch1002");
 
         let win = Arc::new(event_loop.create_window(attrs).unwrap());
         let mut context = Context::new(Arc::clone(&win));
