@@ -1,0 +1,23 @@
+[package]
+name = "pitch1002"
+description = "a simple CHIP-8 emulator"
+version = "0.1.0"
+edition = "2021"
+authors = ["bogdanov <bbogdan_ov@mail.ru>"]
+readme = "README"
+repository = "https://github.com/bbogdan-ov/pitch1002"
+
+[dependencies]
+cpal = "0.15.3"
+pollster = "0.3.0"
+winit = "0.30.5"
+[dependencies.wgpu]
+version = "22.1.0"
+default-features = false
+features = ["wgsl", "webgl", "dx12", "metal"]
+
+[profile.release]
+strip = true
+lto = true
+opt-level = "z"
+panic = "abort"

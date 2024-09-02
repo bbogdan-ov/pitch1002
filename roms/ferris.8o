@@ -1,0 +1,89 @@
+# Movement:
+#      ^
+#      2
+# <  q w e  >
+#      s
+#      V
+
+:alias px v1 # Player x
+:alias py v2 # Player y
+:alias plx v3 # Player last x
+:alias ply v4 # Player last y
+:alias cx v5 # Corn x
+:alias cy v6 # Corn y
+:alias f v7 # Frame
+:alias ff v8 # Frame flipper
+:alias dl v9 # Delay
+
+: main
+    f := 0x0
+    ff := 0xF
+    dl := 0xF
+    delay := v7
+
+    rand-corn
+    draw-corn
+
+    # Draw ferris
+    i := ferris-1
+    sprite px py 6
+
+    loop
+        plx := px
+        ply := py
+
+        # Move ferris
+        v0 := OCTO_KEY_2 if v0 key then py += -1
+        v0 := OCTO_KEY_S if v0 key then py +=  1
+        v0 := OCTO_KEY_Q if v0 key then px += -1
+        v0 := OCTO_KEY_E if v0 key then px +=  1
+
+        if f == 0 then i := ferris-1
+        if f == 0xF then i := ferris-2
+
+        # Erase old ferris
+        sprite plx ply 6
+
+        # Flip frames
+        dl := delay
+        if dl == 0 begin
+            f ^= ff
+            dl := 0xF
+            delay := dl
+        end
+
+        if f == 0 then i := ferris-1
+        if f == 0xF then i := ferris-2
+
+        # Draw ferris with a new frame
+        sprite px py 6
+
+        # Eat the corn!
+        if vf != 0 then eat-corn
+    again
+		
+: eat-corn
+		draw-corn
+		rand-corn
+		draw-corn
+		
+		v0 := 2
+		buzzer := v0
+;
+
+: rand-corn
+	  cx := random 0xFF
+    cy := random 0xFF
+;
+
+: draw-corn
+    i := corn
+    sprite cx cy 6
+;
+
+: ferris-1
+    0xA5 0xE7 0x42 0x3C 0x3C 0x2A
+: ferris-2
+    0xC3 0xC3 0x42 0x3C 0x3C 0x54
+: corn
+    0x1C 0xAC 0xD4 0xE8 0xF0 0x78
